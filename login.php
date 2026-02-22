@@ -26,13 +26,6 @@ $db_user = 'sti_moi'; // VOTRE NOM D'UTILISATEUR BDD
 $db_pass = 'pj32~lH36'; // VOTRE MOT DE PASSE BDD
 
 // ============== CONFIGURATION OAUTH ==============\\
-define('GOOGLE_CLIENT_ID', '117257485601-7kh0ts5408cvjcnov6d8344jk094npcm.apps.googleusercontent.com');
-define('GOOGLE_CLIENT_SECRET', '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');
-define('GOOGLE_REDIRECT_URI', 'https://zyrahost.fr/client.php');
-
-define('DISCORD_CLIENT_ID', '1432354685502885918');
-define('DISCORD_CLIENT_SECRET', 'LxB6CmGYMpaY0yUMjCXhnhdIaFEOBDb8');
-define('DISCORD_REDIRECT_URI', 'https://zyrahost.fr/login.php');
 
 $error = '';
 $success = '';
