@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hébergement Discord Modulaire - ZyraHost.fr</title>
+    <meta name="description" content="Choisissez vos performances d'hébergement Discord et ajoutez des templates optionnels. Offre gratuite disponible pour commencer.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+        
+        .card-gradient {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .popular-badge {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+        }
+        
+        .free-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .price-crossed {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .price-crossed::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: #ef4444;
+            transform: translateY(-50%) rotate(-5deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-50 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">🖥️</span>
+                    <span class="text-xl font-bold gradient-text">ZyraHost.fr</span>
+                    <span class="text-gray-400">/ Hébergement Discord</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="https://zyrahost.fr" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-home mr-2"></i>Accueil
+                    </a>
+                    <a href="https://zyrahost.fr/login.php?next=https://zyrahost.fr/nexus-rewards.html" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-user mr-2"></i>Connexion
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Special Offer Banner -->
+    <div id="specialBanner" class="hidden bg-gradient-to-r from-green-600/20 to-blue-600/20 border-b border-green-500 py-3">
+        <div class="container mx-auto px-4 text-center">
+            <div class="inline-flex items-center">
+                <i class="fas fa-gift text-green-400 mr-2"></i>
+                <span class="text-green-300 font-semibold">Offre exclusive : Template Nexus offert avec votre hébergement !</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Special Offer Top Section -->
+    <div id="specialOfferTop" class="hidden bg-gradient-to-r from-green-600/30 to-blue-600/30 py-8 border-b border-green-500/50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center bg-green-500/20 border border-green-500 rounded-full px-6 py-3 mb-6">
+                    <i class="fas fa-star text-yellow-400 mr-2"></i>
+                    <span class="text-green-300 font-bold text-lg">OFFRE SPÉCIALE NEXUS IA</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
+                    Template <span class="text-green-400">Nexus</span> OFFERT ! 
+                </h2>
+                <p class="text-xl text-gray-200 mb-6">
+                    Merci d'utiliser la documentation Nexus IA. Profitez de notre template Nexus premium gratuitement avec votre hébergement.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg px-6 py-3 border border-gray-600">
+                        <span class="text-gray-400 line-through text-lg">4.99€</span>
+                    </div>
+                    <div class="bg-green-500/20 rounded-lg px-6 py-3 border border-green-500">
+                        <span class="text-green-300 font-bold text-2xl">0€</span>
+                    </div>
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg px-6 py-3 border border-gray-600">
+                        <span class="text-gray-300">Template offert</span>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button onclick="scrollToFreeBot()" class="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-gift mr-2"></i>Réclamer mon template offert
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-24 pb-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="mb-8">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                        <span class="gradient-text">Hébergement Discord</span><br>
+                        <span class="text-white">Modulaire</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Choisissez vos performances serveur et ajoutez des templates optionnels<br>
+                        <strong class="text-blue-400">Performances garanties • Templates premium • Configuration instantanée</strong>
+                    </p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-3xl mx-auto">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-400 mb-1">4</div>
+                        <div class="text-gray-400 text-sm">Niveaux de performance</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-400 mb-1">-30%</div>
+                        <div class="text-gray-400 text-sm">vs concurrence</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-400 mb-1">99.9%</div>
+                        <div class="text-gray-400 text-sm">Uptime</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-yellow-400 mb-1">24/7</div>
+                        <div class="text-gray-400 text-sm">Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 text-6xl opacity-20 float-animation" style="animation-delay: 0s;">🖥️</div>
+        <div class="absolute top-40 right-10 text-5xl opacity-20 float-animation" style="animation-delay: 1s;">⚡</div>
+        <div class="absolute bottom-20 left-20 text-4xl opacity-20 float-animation" style="animation-delay: 2s;">🚀</div>
+    </section>
+
+    <!-- Performance Selection -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Choisissez vos performances</h2>
+                <p class="text-xl text-gray-300">Des serveurs optimisés pour toutes vos besoins</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <!-- Performance 1: Starter -->
+                <div class="card-gradient rounded-xl border border-gray-700 hover:border-green-500 transition-all transform hover:scale-105 relative overflow-hidden">
+                    <div class="p-6">
+                        <div class="text-5xl mb-4 text-center">🌱</div>
+                        <h3 class="text-2xl font-bold mb-3 text-green-400">Hébergeur Starter</h3>
+                        <p class="text-gray-300 mb-6">Idéal pour débuter et tester vos projets.</p>
+                        
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-microchip text-purple-400 mr-2"></i>
+                                <span class="text-purple-300">CPU: 50% dédié</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-memory text-cyan-400 mr-2"></i>
+                                <span class="text-cyan-300">RAM: 0.5 Go dédié</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-tachometer-alt text-blue-400 mr-2"></i>
+                                <span class="text-blue-300">Uptime: 99.5%</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>
+                                <span class="text-yellow-300">Latence: <100ms</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-4">
+                            <div class="text-3xl font-bold text-green-400">
+                                <span class="price-final">1.99€</span>
+                                <span class="text-gray-400 text-lg">/mois</span>
+                            </div>
+                            <div class="text-sm text-gray-400">Idéal pour débuter</div>
+                        </div>
+                        
+                        <button onclick="selectPerformance('starter', 1.99, 50, 0.5)" class="w-full bg-green-600 hover:bg-green-700 px-4 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-rocket mr-2"></i>Choisir ces performances
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Performance 2: Standard -->
+                <div class="card-gradient rounded-xl border border-gray-700 hover:border-blue-500 transition-all transform hover:scale-105 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 popular-badge text-white px-3 py-1 rounded-bl-lg text-sm font-bold">
+                        <i class="fas fa-star mr-1"></i>Populaire
+                    </div>
+                    <div class="p-6">
+                        <div class="text-5xl mb-4 text-center">⚡</div>
+                        <h3 class="text-2xl font-bold mb-3 text-blue-400">Hébergeur Standard</h3>
+                        <p class="text-gray-300 mb-6">Parfait pour les serveurs communautaires actifs.</p>
+                        
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-microchip text-purple-400 mr-2"></i>
+                                <span class="text-purple-300">CPU: 75% dédié</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-memory text-cyan-400 mr-2"></i>
+                                <span class="text-cyan-300">RAM: 2 Go dédié</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-tachometer-alt text-blue-400 mr-2"></i>
+                                <span class="text-blue-300">Uptime: 99.8%</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>
+                                <span class="text-yellow-300">Latence: <50ms</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-4">
+                            <div class="text-3xl font-bold text-green-400">
+                                <span class="price-final">2.99€</span>
+                                <span class="text-gray-400 text-lg">/mois</span>
+                            </div>
+                            <div class="text-sm text-gray-400">-30% vs concurrence</div>
+                        </div>
+                        
+                        <button onclick="selectPerformance('standard', 2.99, 75, 2)" class="w-full bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-rocket mr-2"></i>Choisir ces performances
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Performance 3: Pro -->
+                <div class="card-gradient rounded-xl border border-gray-700 hover:border-purple-500 transition-all transform hover:scale-105 relative overflow-hidden">
+                    <div class="p-6">
+                        <div class="text-5xl mb-4 text-center">🚀</div>
+                        <h3 class="text-2xl font-bold mb-3 text-purple-400">Hébergeur Pro</h3>
+                        <p class="text-gray-300 mb-6">Pour les grands serveurs et applications exigeantes.</p>
+                        
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-microchip text-purple-400 mr-2"></i>
+                                <span class="text-purple-300">CPU: 100% dédié</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-memory text-cyan-400 mr-2"></i>
+                                <span class="text-cyan-300">RAM: 4 Go dédié</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-tachometer-alt text-blue-400 mr-2"></i>
+                                <span class="text-blue-300">Uptime: 99.9%</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>
+                                <span class="text-yellow-300">Latence: <30ms</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-4">
+                            <div class="text-3xl font-bold text-green-400">
+                                <span class="price-final">5.99€</span>
+                                <span class="text-gray-400 text-lg">/mois</span>
+                            </div>
+                            <div class="text-sm text-gray-400">-30% vs concurrence</div>
+                        </div>
+                        
+                        <button onclick="selectPerformance('pro', 5.99, 100, 4)" class="w-full bg-purple-600 hover:bg-purple-700 px-4 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-rocket mr-2"></i>Choisir ces performances
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Performance 4: Enterprise -->
+                <div class="card-gradient rounded-xl border border-gray-700 hover:border-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all transform hover:scale-105 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 free-badge text-white px-3 py-1 rounded-bl-lg text-sm font-bold">
+                        <i class="fas fa-crown mr-1"></i>PREMIUM
+                    </div>
+                    <div class="p-6">
+                        <div class="text-5xl mb-4 text-center">💎</div>
+                        <h3 class="text-2xl font-bold mb-3 gradient-text">Hébergeur Enterprise</h3>
+                        <p class="text-gray-300 mb-6">Performance maximale pour les entreprises et gros projets.</p>
+                        
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-microchip text-purple-400 mr-2"></i>
+                                <span class="text-purple-300">CPU: 200% dédié</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-memory text-cyan-400 mr-2"></i>
+                                <span class="text-cyan-300">RAM: 8 Go dédié</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-tachometer-alt text-blue-400 mr-2"></i>
+                                <span class="text-blue-300">Uptime: 99.95%</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>
+                                <span class="text-yellow-300">Latence: <15ms</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-4">
+                            <div class="text-3xl font-bold text-green-400">
+                                <span class="price-final">12.99€</span>
+                                <span class="text-gray-400 text-lg">/mois</span>
+                            </div>
+                            <div class="text-sm text-gray-400">Support prioritaire</div>
+                        </div>
+                        
+                        <button onclick="selectPerformance('enterprise', 12.99, 200, 8)" class="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 px-4 py-3 rounded-lg font-semibold transition-all">
+                            <i class="fas fa-rocket mr-2"></i>Choisir ces performances
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Ajouter un template (optionnel)</h2>
+                <p class="text-xl text-gray-300">Personnalisez votre hébergement avec des templates pré-configurés</p>
+            </div>
+
+            <div id="selectedTemplateInfo" class="hidden mb-8 max-w-4xl mx-auto">
+                <div class="bg-green-500/20 border border-green-500 rounded-lg p-4 text-center">
+                    <div class="inline-flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span class="text-green-300 font-semibold" id="selectedTemplateText">Template Nexus sélectionné automatiquement</span>
+                    </div>
+                </div>
+            </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <!-- Template 1: Nexus -->
+                <div class="card-gradient rounded-xl border border-gray-700 hover:border-green-500 transition-all transform hover:scale-105 relative overflow-hidden template-card" data-template="nexus" data-price="4.99">
+                    <div class="p-4">
+                        <div class="text-4xl mb-3 text-center">🧠</div>
+                        <h3 class="text-lg font-bold mb-2 text-green-400">Nexus</h3>
+                        <p class="text-gray-300 text-sm mb-4">IA conversationnelle et utilitaires avancés</p>
+                        
+                        <div class="space-y-1 mb-4 text-sm">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">GPT-4 intégré</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Multi-langues</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Mémoire IA</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <div class="text-lg font-bold text-green-400">
+                                <span class="template-price">4.99€</span>
+                                <span class="text-gray-400 text-xs">/mois</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectTemplate('nexus', 4.99)" class="w-full bg-green-600 hover:bg-green-700 px-3 py-2 rounded-lg text-sm font-semibold transition-colors template-btn">
+                            <i class="fas fa-plus mr-1"></i>Ajouter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Template 2: Modération -->
+                <div class="card-gradient rounded-xl border border-gray-700 hover:border-blue-500 transition-all transform hover:scale-105 relative overflow-hidden template-card" data-template="moderation" data-price="2.99">
+                    <div class="p-4">
+                        <div class="text-4xl mb-3 text-center">🛡️</div>
+                        <h3 class="text-lg font-bold mb-2 text-blue-400">Modération</h3>
+                        <p class="text-gray-300 text-sm mb-4">Modération automatique et gestion de communauté</p>
+                        
+                        <div class="space-y-1 mb-4 text-sm">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Anti-spam IA</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Gestion rôles</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Logs détaillés</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <div class="text-lg font-bold text-green-400">
+                                <span class="template-price">2.99€</span>
+                                <span class="text-gray-400 text-xs">/mois</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectTemplate('moderation', 2.99)" class="w-full bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm font-semibold transition-colors template-btn">
+                            <i class="fas fa-plus mr-1"></i>Ajouter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Template 3: Musique -->
+                <div class="card-gradient rounded-xl border border-gray-700 hover:border-purple-500 transition-all transform hover:scale-105 relative overflow-hidden template-card" data-template="music" data-price="3.99">
+                    <div class="p-4">
+                        <div class="text-4xl mb-3 text-center">🎵</div>
+                        <h3 class="text-lg font-bold mb-2 text-purple-400">Musique</h3>
+                        <p class="text-gray-300 text-sm mb-4">Streaming musical haute qualité</p>
+                        
+                        <div class="space-y-1 mb-4 text-sm">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">YouTube & Spotify</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">File d'attente</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Qualité HD</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <div class="text-lg font-bold text-green-400">
+                                <span class="template-price">3.99€</span>
+                                <span class="text-gray-400 text-xs">/mois</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectTemplate('music', 3.99)" class="w-full bg-purple-600 hover:bg-purple-700 px-3 py-2 rounded-lg text-sm font-semibold transition-colors template-btn">
+                            <i class="fas fa-plus mr-1"></i>Ajouter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Template 4: Économie -->
+                <div class="card-gradient rounded-xl border border-gray-700 hover:border-yellow-500 transition-all transform hover:scale-105 relative overflow-hidden template-card" data-template="economy" data-price="2.49">
+                    <div class="p-4">
+                        <div class="text-4xl mb-3 text-center">💰</div>
+                        <h3 class="text-lg font-bold mb-2 text-yellow-400">Économie</h3>
+                        <p class="text-gray-300 text-sm mb-4">Système économique complet avec monnaie virtuelle</p>
+                        
+                        <div class="space-y-1 mb-4 text-sm">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Monnaie virtuelle</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Boutique & items</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-check text-green-400 mr-1 text-xs"></i>
+                                <span class="text-xs">Salaires & jobs</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <div class="text-lg font-bold text-green-400">
+                                <span class="template-price">2.49€</span>
+                                <span class="text-gray-400 text-xs">/mois</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="selectTemplate('economy', 2.49)" class="w-full bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm font-semibold transition-colors template-btn">
+                            <i class="fas fa-plus mr-1"></i>Ajouter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">
+                    © 2024 ZyraHost.fr - Hébergement Discord modulaire et performant
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://zyrahost.fr" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-home mr-2"></i>Accueil
+                    </a>
+                    <a href="https://zyrahost.fr/login.php?next=https://zyrahost.fr/nexus-rewards.html" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-user mr-2"></i>Connexion
+                    </a>
+                    <a href="mailto:support@zyrahost.fr" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-envelope mr-2"></i>Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        let isFromNexusDocs = false;
+        let selectedPerformance = null;
+        let selectedTemplate = null;
+        let templatePrice = 0;
+
+        // Check if user comes from Nexus IA documentation
+        function checkReferrer() {
+            const referrer = document.referrer;
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Check if coming from Nexus IA docs or has special parameter
+            isFromNexusDocs = referrer.includes('nexus') || 
+                             urlParams.has('redirect') && urlParams.get('redirect').includes('nexus') ||
+                             urlParams.has('template') && urlParams.get('template') === 'nexus' ||
+                             urlParams.has('source') && urlParams.get('source') === 'nexus';
+            
+            return isFromNexusDocs;
+        }
+
+        // Auto-select Nexus template and free starter if coming from Nexus
+        function autoSelectNexusTemplate() {
+            if (isFromNexusDocs) {
+                const nexusCard = document.querySelector('[data-template="nexus"]');
+                const starterBtn = document.querySelector('button[onclick*="starter"]');
+                const starterCard = starterBtn ? starterBtn.closest('.card-gradient') : null;
+                
+                if (nexusCard) {
+                    selectTemplate('nexus', 0); // Free for Nexus users
+                    
+                    // Update Nexus template display
+                    const nexusPrice = nexusCard.querySelector('.template-price');
+                    const nexusBtn = nexusCard.querySelector('.template-btn');
+                    if (nexusPrice) nexusPrice.textContent = '0€';
+                    if (nexusBtn) {
+                        nexusBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Sélectionné';
+                        nexusBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                        nexusBtn.classList.add('bg-gray-600');
+                        nexusBtn.disabled = true;
+                    }
+                    
+                    // Add badge
+                    const badge = document.createElement('div');
+                    badge.className = 'absolute top-0 left-0 free-badge text-white px-2 py-1 rounded-tr-lg text-xs font-bold';
+                    badge.innerHTML = '<i class="fas fa-gift mr-1"></i>Offert';
+                    nexusCard.appendChild(badge);
+                }
+                
+                // Make starter plan free
+                if (starterCard) {
+                    const starterPrice = starterCard.querySelector('.price-final');
+                    const starterInfo = starterCard.querySelector('.text-sm.text-gray-400');
+                    if (starterPrice) {
+                        starterPrice.textContent = '0€';
+                        starterPrice.classList.add('text-4xl');
+                    }
+                    if (starterInfo) starterInfo.textContent = 'Offert avec lien Nexus';
+                    
+                    // Add free badge
+                    const freeBadge = document.createElement('div');
+                    freeBadge.className = 'absolute top-0 right-0 free-badge text-white px-3 py-1 rounded-bl-lg text-sm font-bold';
+                    freeBadge.innerHTML = '<i class="fas fa-gift mr-1"></i>GRATUIT';
+                    starterCard.appendChild(freeBadge);
+                    
+                    // Update the button onclick price parameter
+                    if (starterBtn) {
+                        starterBtn.setAttribute('onclick', "selectPerformance('starter', 0, 50, 0.5)");
+                    }
+                }
+                
+                // Show special banner
+                const specialBanner = document.getElementById('specialBanner');
+                const specialOfferTop = document.getElementById('specialOfferTop');
+                specialBanner.classList.remove('hidden');
+                specialOfferTop.classList.remove('hidden');
+            }
+        }
+
+        // Handle performance selection
+        function selectPerformance(plan, price, cpu, ram) {
+            selectedPerformance = { plan, price, cpu, ram };
+            
+            // If coming from Nexus and selecting free plan, redirect directly to nexus-rewards
+            if (isFromNexusDocs && plan === 'starter' && price === 0) {
+                // Show loading state briefly
+                event.target.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Redirection...';
+                event.target.disabled = true;
+                
+                setTimeout(() => {
+                    window.location.href = 'https://zyrahost.fr/nexus-rewards.html';
+                }, 500);
+                return;
+            }
+            
+            // Show loading state for normal flow
+            event.target.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Configuration...';
+            event.target.disabled = true;
+            
+            // Simulate processing
+            setTimeout(() => {
+                // Update all performance buttons
+                document.querySelectorAll('[onclick*="selectPerformance"]').forEach(btn => {
+                    if (btn !== event.target) {
+                        btn.classList.remove('ring-4', 'ring-blue-400', 'ring-opacity-50');
+                    }
+                });
+                
+                // Highlight selected
+                event.target.closest('.card-gradient').classList.add('ring-4', 'ring-blue-400', 'ring-opacity-50');
+                event.target.innerHTML = '<i class="fas fa-check mr-2"></i>Sélectionné';
+                
+                // Scroll to templates if not selected yet
+                if (!selectedTemplate) {
+                    document.getElementById('selectedTemplateInfo').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    proceedToSignup();
+                }
+            }, 1000);
+        }
+
+        // Handle template selection
+        function selectTemplate(template, price) {
+            selectedTemplate = template;
+            templatePrice = isFromNexusDocs && template === 'nexus' ? 0 : price;
+            
+            // Update all template buttons
+            document.querySelectorAll('.template-btn').forEach(btn => {
+                btn.classList.remove('bg-gray-600');
+                btn.disabled = false;
+                const card = btn.closest('.template-card');
+                if (card && card.dataset.template === template) {
+                    btn.innerHTML = '<i class="fas fa-check mr-1"></i>Sélectionné';
+                    btn.classList.add('bg-gray-600');
+                    btn.disabled = true;
+                    card.classList.add('ring-4', 'ring-green-400', 'ring-opacity-50');
+                } else {
+                    btn.innerHTML = '<i class="fas fa-plus mr-1"></i>Ajouter';
+                    card.classList.remove('ring-4', 'ring-green-400', 'ring-opacity-50');
+                }
+            });
+            
+            // Show selected template info
+            const infoDiv = document.getElementById('selectedTemplateInfo');
+            const infoText = document.getElementById('selectedTemplateText');
+            if (infoDiv && infoText) {
+                if (isFromNexusDocs && template === 'nexus') {
+                    infoText.textContent = 'Template Nexus sélectionné automatiquement (Offert via Nexus)';
+                } else {
+                    infoText.textContent = `Template ${template} sélectionné`;
+                }
+                infoDiv.classList.remove('hidden');
+            }
+        }
+
+        // Proceed to signup
+        function proceedToSignup() {
+            if (!selectedPerformance) {
+                alert('Veuillez d\'abord choisir vos performances');
+                return;
+            }
+            
+            let url = `https://zyrahost.fr/signup.php?cpu=${selectedPerformance.cpu}&ram=${selectedPerformance.ram}&plan=${selectedPerformance.plan}&price=${selectedPerformance.price}`;
+            
+            if (selectedTemplate) {
+                url += `&template=${selectedTemplate}&templatePrice=${templatePrice}`;
+            }
+            
+            if (isFromNexusDocs) {
+                url += '&source=nexus';
+            }
+            
+            window.location.href = url;
+        }
+
+        // Scroll to free template
+        function scrollToFreeBot() {
+            const nexusCard = document.querySelector('[data-template="nexus"]');
+            if (nexusCard) {
+                nexusCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Add highlight effect
+                nexusCard.classList.add('ring-4', 'ring-green-400', 'ring-opacity-50');
+                setTimeout(() => {
+                    nexusCard.classList.remove('ring-4', 'ring-green-400', 'ring-opacity-50');
+                }, 2000);
+            }
+        }
+
+        // Initialize page
+        function initPage() {
+            checkReferrer();
+            autoSelectNexusTemplate();
+            
+            // Add animations on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.card-gradient').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage();
+        });
+    </script>
+</body>
+</html>

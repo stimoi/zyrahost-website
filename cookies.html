@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des cookies - ZyraHost</title>
+    <style>
+        .cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 90%;
+            width: 800px;
+            background: #1a1a1a;
+            color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .cookie-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .cookie-text {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .cookie-btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+        .accept-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .accept-btn:hover {
+            background-color: #3e8e41;
+            transform: translateY(-1px);
+        }
+        .more-info-btn {
+            background-color: #2c2c2c;
+            color: #f0f0f0;
+            border: 1px solid #4a4a4a;
+        }
+        .more-info-btn:hover {
+            background-color: #3a3a3a;
+            transform: translateY(-1px);
+        }
+        .cookie-settings {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #252525;
+            border-radius: 6px;
+            border-left: 4px solid #4CAF50;
+        }
+        .cookie-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #2d2d2d;
+            border-radius: 4px;
+        }
+        .cookie-option input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        .cookie-option-details {
+            flex: 1;
+        }
+        .cookie-option-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .cookie-option-desc {
+            font-size: 0.9em;
+            color: #aaa;
+            line-height: 1.4;
+        }
+        .cookie-required {
+            color: #4CAF50;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+        .cookie-save-btn {
+            background-color: #2196F3;
+            color: white;
+            margin-right: 10px;
+        }
+        .cookie-save-btn:hover {
+            background-color: #0b7dda;
+        }
+        .cookie-advanced-btn {
+            background: none;
+            border: none;
+            color: #4CAF50;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 5px 0;
+            font-size: 0.9em;
+        }
+        .cookie-advanced-btn:hover {
+            text-decoration: none;
+        }
+        @media (max-width: 600px) {
+            .cookie-banner {
+                width: 90%;
+                bottom: 10px;
+                padding: 15px;
+            }
+            .cookie-buttons {
+                flex-direction: column;
+            }
+            .cookie-btn {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <h3 style="margin-top: 0; margin-bottom: 10px;"> Gestion des cookies</h3>
+                Nous utilisons des cookies pour améliorer votre expérience sur notre site. Certains sont nécessaires au bon fonctionnement, d'autres sont optionnels.
+            </div>
+            
+            <div class="cookie-settings" id="cookieSettings">
+                <div class="cookie-option">
+                    <input type="checkbox" id="cookieEssential" checked disabled>
+                    <div class="cookie-option-details">
+                        <span class="cookie-option-title">Cookies essentiels <span class="cookie-required">(Toujours actif)</span></span>
+                        <span class="cookie-option-desc">Nécessaires au bon fonctionnement du site (gestion de session, sécurité, etc.). Ces cookies ne peuvent pas être désactivés.</span>
+                    </div>
+                </div>
+                
+                <div class="cookie-option">
+                    <input type="checkbox" id="cookieAutoLogin">
+                    <div class="cookie-option-details">
+                        <span class="cookie-option-title">Reconnexion automatique</span>
+                        <span class="cookie-option-desc">Vous permet de rester connecté à votre compte entre les sessions.</span>
+                    </div>
+                </div>
+                
+                <div class="cookie-option">
+                    <input type="checkbox" id="cookieAnalytics">
+                    <div class="cookie-option-details">
+                        <span class="cookie-option-title">Analyse d'audience</span>
+                        <span class="cookie-option-desc">Nous aide à comprendre comment vous utilisez notre site pour l'améliorer.</span>
+                    </div>
+                </div>
+                
+                <div class="cookie-option">
+                    <input type="checkbox" id="cookiePreferences">
+                    <div class="cookie-option-details">
+                        <span class="cookie-option-title">Préférences</span>
+                        <span class="cookie-option-desc">Enregistre vos paramètres et préférences pour une meilleure expérience.</span>
+                    </div>
+                </div>
+                
+                <div class="cookie-buttons">
+                    <button class="cookie-btn cookie-save-btn" id="saveCookieSettings">Enregistrer mes préférences</button>
+                    <button class="cookie-btn accept-btn" id="acceptAllCookies">Tout accepter</button>
+                </div>
+            </div>
+            
+            <div class="cookie-buttons">
+                <button class="cookie-btn accept-btn" id="acceptEssentialCookies">Nécessaires uniquement</button>
+                <button class="cookie-btn more-info-btn" id="customizeCookies">Personnaliser</button>
+                <button class="cookie-btn accept-btn" id="acceptAllCookiesMain">Tout accepter</button>
+            </div>
+            
+            <div style="font-size: 0.85em; margin-top: 15px; color: #aaa; line-height: 1.4;">
+                En utilisant notre site, vous acceptez notre <a href="#" style="color: #4CAF50; text-decoration: none;">Politique de confidentialité</a> et nos <a href="#" style="color: #4CAF50; text-decoration: none;">Conditions d'utilisation</a>.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieBanner = document.getElementById('cookieBanner');
+            const cookieSettings = document.getElementById('cookieSettings');
+            
+            // Fonction pour définir un cookie
+            function setCookie(name, value, days, sameSite = 'Lax') {
+                let expires = '';
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = '; expires=' + date.toUTCString();
+                }
+                document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=' + sameSite;
+            }
+            
+            // Fonction pour obtenir un cookie
+            function getCookie(name) {
+                const nameEQ = name + '=';
+                const ca = document.cookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+            
+            // Fonction pour supprimer un cookie
+            function deleteCookie(name) {
+                document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            }
+            
+            // Vérifier si la bannière doit être affichée
+            function shouldShowBanner() {
+                return !getCookie('cookieConsent');
+            }
+            
+            // Afficher la bannière avec animation
+            function showBanner() {
+                cookieBanner.style.display = 'block';
+                setTimeout(() => {
+                    cookieBanner.style.opacity = '1';
+                    cookieBanner.style.transform = 'translateX(-50%) translateY(0)';
+                }, 10);
+            }
+            
+            // Cacher la bannière avec animation
+            function hideBanner() {
+                cookieBanner.style.opacity = '0';
+                cookieBanner.style.transform = 'translateX(-50%) translateY(20px)';
+                setTimeout(() => {
+                    cookieBanner.style.display = 'none';
+                }, 300);
+            }
+            
+            // Charger les préférences
+            function loadPreferences() {
+                const preferences = {
+                    essential: true,
+                    autoLogin: getCookie('cookieAutoLogin') === 'true',
+                    analytics: getCookie('cookieAnalytics') === 'true',
+                    preferences: getCookie('cookiePreferences') === 'true'
+                };
+                
+                // Mettre à jour les cases à cocher
+                document.getElementById('cookieAutoLogin').checked = preferences.autoLogin;
+                document.getElementById('cookieAnalytics').checked = preferences.analytics;
+                document.getElementById('cookiePreferences').checked = preferences.preferences;
+                
+                return preferences;
+            }
+            
+            // Sauvegarder les préférences
+            function savePreferences() {
+                const preferences = {
+                    essential: true,
+                    autoLogin: document.getElementById('cookieAutoLogin').checked,
+                    analytics: document.getElementById('cookieAnalytics').checked,
+                    preferences: document.getElementById('cookiePreferences').checked
+                };
+                
+                // Définir les cookies en fonction des préférences
+                setCookie('cookieConsent', 'true', 365);
+                setCookie('cookieAutoLogin', preferences.autoLogin, 365);
+                setCookie('cookieAnalytics', preferences.analytics, 365);
+                setCookie('cookiePreferences', preferences.preferences, 365);
+                
+                // Appliquer les préférences
+                applyPreferences(preferences);
+                
+                // Afficher un message de confirmation
+                alert('Vos préférences ont été enregistrées avec succès !');
+                
+                // Cacher la bannière
+                hideBanner();
+            }
+            
+            // Fonction pour envoyer les données d'analyse à Discord
+            async function sendAnalyticsToDiscord() {
+                try {
+                    // Récupérer des informations sur l'utilisateur et sa session
+                    const userAgent = navigator.userAgent;
+                    const screenSize = `${window.screen.width}x${window.screen.height}`;
+                    const language = navigator.language;
+                    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    const referrer = document.referrer || 'Direct';
+                    const pageUrl = window.location.href;
+                    const timestamp = new Date().toISOString();
+                    
+                    // Créer l'embed Discord
+                    const embed = {
+                        title: '📊 Nouvelle analyse d\'audience des cookies de zyrahost',
+                        color: 0x00ff00,
+                        fields: [
+                            {
+                                name: '🌐 Page visitée',
+                                value: pageUrl,
+                                inline: false
+                            },
+                            {
+                                name: '🕒 Horodatage',
+                                value: timestamp,
+                                inline: true
+                            },
+                            {
+                                name: '🌍 Langue',
+                                value: language,
+                                inline: true
+                            },
+                            {
+                                name: '🖥️ Taille d\'écran',
+                                value: screenSize,
+                                inline: true
+                            },
+                            {
+                                name: '⏰ Fuseau horaire',
+                                value: timezone,
+                                inline: true
+                            },
+                            {
+                                name: '🔗 Provenance',
+                                value: referrer,
+                                inline: true
+                            },
+                            {
+                                name: '📱 User Agent',
+                                value: `\`\`\`${userAgent}\`\`\``,
+                                inline: false
+                            }
+                        ],
+                        timestamp: timestamp
+                    };
+
+                    // Envoyer les données au webhook Discord
+                    const response = await fetch('https://discord.com/api/webhooks/1443660275206328433/EZyVRAoBQCDPNE5DNfMSE1QFC1Sduw7LpkexREXAGOb5MH6lyngA-K12_06NWKTxH5a1', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            embeds: [embed]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        console.error('Erreur lors de l\'envoi des données à Discord:', await response.text());
+                    }
+                } catch (error) {
+                    console.error('Erreur dans sendAnalyticsToDiscord:', error);
+                }
+            }
+
+            // Appliquer les préférences
+            function applyPreferences(preferences) {
+                console.log('Préférences appliquées :', preferences);
+                
+                // Gestion de la reconnexion automatique
+                if (preferences.autoLogin) {
+                    console.log('Reconnexion automatique activée');
+                } else {
+                    console.log('Reconnexion automatique désactivée');
+                }
+                
+                // Gestion de l'analyse d'audience
+                if (preferences.analytics) {
+                    console.log('Analyse d\'audience activée');
+                    // Envoyer les données d'analyse à Discord
+                    sendAnalyticsToDiscord();
+                } else {
+                    console.log('Analyse d\'audience désactivée');
+                }
+            }
+            
+            // Gestion des événements
+            document.getElementById('customizeCookies').addEventListener('click', function() {
+                cookieSettings.style.display = 'block';
+                this.style.display = 'none';
+                document.getElementById('acceptEssentialCookies').style.display = 'none';
+                document.getElementById('acceptAllCookiesMain').style.display = 'none';
+            });
+            
+            document.getElementById('saveCookieSettings').addEventListener('click', savePreferences);
+            
+            document.getElementById('acceptAllCookies').addEventListener('click', function() {
+                document.getElementById('cookieAutoLogin').checked = true;
+                document.getElementById('cookieAnalytics').checked = true;
+                document.getElementById('cookiePreferences').checked = true;
+                savePreferences();
+            });
+            
+            document.getElementById('acceptAllCookiesMain').addEventListener('click', function() {
+                document.getElementById('cookieAutoLogin').checked = true;
+                document.getElementById('cookieAnalytics').checked = true;
+                document.getElementById('cookiePreferences').checked = true;
+                savePreferences();
+            });
+            
+            document.getElementById('acceptEssentialCookies').addEventListener('click', function() {
+                document.getElementById('cookieAutoLogin').checked = false;
+                document.getElementById('cookieAnalytics').checked = false;
+                document.getElementById('cookiePreferences').checked = false;
+                savePreferences();
+            });
+            
+            // Initialisation
+            if (shouldShowBanner()) {
+                showBanner();
+                loadPreferences();
+            } else {
+                // Charger les préférences existantes
+                const preferences = loadPreferences();
+                applyPreferences(preferences);
+            }
+        });
+    </script>
+</body>
+</html>

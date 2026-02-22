@@ -1,0 +1,37 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/connexion"
+  to = "/connexion.html"
+  status = 200
+
+[[redirects]]
+  from = "/inscription" 
+  to = "/inscription.html"
+  status = 200
+  
+[[redirects]]
+  from = "/mardi" 
+  to = "/mardi.php"
+  status = 200
+
+[[redirects]]
+  from = "/login" 
+  to = "/login.php"
+  status = 200
+  
+[[redirects]]
+  from = "/editor" 
+  to = "/MDL/editor.php"
+  status = 200
+  
+[[redirects]]
+  from = "/free-robux" 
+  to = "/free-robux.php"
+  status = 200

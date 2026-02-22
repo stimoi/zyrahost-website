@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accès sécurisé</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #0f0;
+      font-family: "Fira Code", "Consolas", monospace;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+    }
+
+    .terminal-wrapper {
+      flex: 1;
+      padding: 20px;
+      background: radial-gradient(circle at top, #022, #000);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .terminal-header {
+      color: #0f0;
+      margin-bottom: 10px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .terminal-window {
+      flex: 1;
+      border: 1px solid #0f0;
+      padding: 15px;
+      box-shadow: 0 0 15px #0f0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 255, 0, 0.12) 51%,
+        rgba(0, 0, 0, 0) 52%
+      );
+      background-size: 100% 3px;
+      pointer-events: none;
+      opacity: 0.25;
+      mix-blend-mode: screen;
+    }
+
+    .glow {
+      text-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
+    }
+
+    #output {
+      font-size: 14px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      margin-left: 2px;
+      background: #0f0;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-wrapper">
+    <div class="terminal-header glow">ZYRAHOST // Mode sécurité avancée</div>
+    <div class="terminal-window">
+      <div id="output" class="glow"></div><span class="cursor"></span>
+      <div class="scanline"></div>
+    </div>
+  </div>
+
+  <script>
+    const lines = [
+      "Initialisation du terminal sécurisé...",
+      "Connexion au système cible [OK]",
+      "Chargement des modules de décryptage [OK]",
+      "",
+      ">>> Début du décryptage de l'ordinateur...",
+      ""
+    ];
+
+    const extraNoiseLines = 40;
+
+    function randomHex(len) {
+      const chars = "0123456789ABCDEF";
+      let s = "";
+      for (let i = 0; i < len; i++) {
+        s += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return s;
+    }
+
+    for (let i = 0; i < extraNoiseLines; i++) {
+      lines.push("[0x" + randomHex(8) + "] " + randomHex(32));
+    }
+
+    const outputEl = document.getElementById("output");
+    const cursorEl = document.querySelector(".cursor");
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    let fullText = "";
+
+    function typeNext() {
+      if (lineIndex >= lines.length) {
+        cursorEl.style.display = "inline-block";
+        return;
+      }
+
+      const line = lines[lineIndex];
+
+      if (charIndex < line.length) {
+        fullText += line.charAt(charIndex);
+        charIndex++;
+      } else {
+        fullText += "\n";
+        lineIndex++;
+        charIndex = 0;
+      }
+
+      outputEl.textContent = fullText;
+
+      const delay =
+        charIndex === 0
+          ? 160 + Math.random() * 260
+          : 15 + Math.random() * 60;
+
+      setTimeout(typeNext, delay);
+    }
+
+    cursorEl.classList.add("fade-in");
+
+    setTimeout(() => {
+      typeNext();
+    }, 600);
+  </script>
+</body>
+</html>
